@@ -16,6 +16,7 @@ date_granularity,
 spend,
 impressions,
 clicks,
+googleshoppingappaddtocart as add_to_cart,    
 conversions as purchases,
 conversions_value as revenue
 
