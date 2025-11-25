@@ -76,8 +76,7 @@ ga4_data as
 
 paid_ga4_data as (
   SELECT 
-    case when campaign_name is null then 'Not Paid' else channel end as channel,
-    campaign_id, campaign_name, date::date, date_granularity,
+    case when campaign_name is null then 'Not Paid' else channel end as channel, campaign_name, date::date, date_granularity,
     SUM(COALESCE(spend, 0)) AS spend,
     SUM(COALESCE(clicks, 0)) AS clicks,
     SUM(COALESCE(impressions, 0)) AS impressions,
@@ -94,7 +93,7 @@ paid_ga4_data as (
     SUM(COALESCE(ga4_purchases, 0)) AS ga4_purchases,
     SUM(COALESCE(ga4_revenue, 0)) AS ga4_revenue
   FROM paid_data FULL OUTER JOIN ga4_data USING(date,date_granularity,campaign_id)
-  GROUP BY 1,2,3,4,5),
+  GROUP BY 1,2,3,4),
 
 sho_data as
     (SELECT
@@ -123,6 +122,7 @@ sho_data as
     
 SELECT 
     channel,
+    campaign_name,
     date,
     date_granularity,
     spend,
