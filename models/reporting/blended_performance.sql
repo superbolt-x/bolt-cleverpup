@@ -50,27 +50,27 @@ paid_data as
 
 ga4_data as 
     (SELECT session_campaign_id as campaign_id, date_trunc('day',date) as date, 'day' as date_granularity, 
-    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_value) as ga4_revenue
+    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_revenue) as ga4_revenue
     FROM {{ source('ga4_raw','traffic_sources_session') }}
     GROUP BY 1,2,3
     UNION ALL
     SELECT session_campaign_id as campaign_id, date_trunc('week',date) as date, 'week' as date_granularity, 
-    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_value) as ga4_revenue
+    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_revenue) as ga4_revenue
     FROM {{ source('ga4_raw','traffic_sources_session') }}
     GROUP BY 1,2,3
     UNION ALL
     SELECT session_campaign_id as campaign_id, date_trunc('month',date) as date, 'month' as date_granularity, 
-    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_value) as ga4_revenue
+    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_revenue) as ga4_revenue
     FROM {{ source('ga4_raw','traffic_sources_session') }}
     GROUP BY 1,2,3
     UNION ALL
     SELECT session_campaign_id as campaign_id, date_trunc('quarter',date) as date, 'quarter' as date_granularity, 
-    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_value) as ga4_revenue
+    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_revenue) as ga4_revenue
     FROM {{ source('ga4_raw','traffic_sources_session') }}
     GROUP BY 1,2,3
     UNION ALL
     SELECT session_campaign_id as campaign_id, date_trunc('year',date) as date, 'year' as date_granularity, 
-    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_value) as ga4_revenue
+    sum(sessions) as sessions, sum(engaged_sessions) as engaged_sessions, sum(conversions_purchase) as ga4_purchases, sum(purchase_revenue) as ga4_revenue
     FROM {{ source('ga4_raw','traffic_sources_session') }}
     GROUP BY 1,2,3),
 
