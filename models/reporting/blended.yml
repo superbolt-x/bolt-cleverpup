@@ -20,6 +20,9 @@ sources:
     - name: facebook_ad_performance
       identifier: cleverpup_facebook_ad_performance
 
+    - name: facebook_campaign_performance
+      identifier: cleverpup_facebook_campaign_performance
+
     - name: googleads_campaign_performance
       identifier: cleverpup_googleads_campaign_performance
 
