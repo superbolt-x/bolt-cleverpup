@@ -40,7 +40,7 @@ paid_data as
     FROM
         (SELECT 'Meta' as channel, campaign_id, campaign_name, date, date_granularity, 
             spend, link_clicks as clicks, impressions, purchases as paid_purchases, revenue as paid_revenue
-        FROM {{ source('reporting','facebook_ad_performance') }}
+        FROM {{ source('reporting','facebook_campaign_performance') }}
         UNION ALL
         SELECT 'Google Ads' as channel, campaign_id, campaign_name, date, date_granularity,
             spend, clicks, impressions, purchases as paid_purchases, revenue as paid_revenue
