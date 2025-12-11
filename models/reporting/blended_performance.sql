@@ -115,7 +115,6 @@ sho_data as
             0 as ga4_purchases,
             0 as ga4_revenue 
         FROM initial_sho_data 
-        GROUP BY channel, date, campaign_name, date_granularity
     )
     
 SELECT 
