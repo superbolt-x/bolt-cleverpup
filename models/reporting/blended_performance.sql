@@ -11,7 +11,7 @@ WITH refund_order_data AS
     FROM {{ source('reporting','shopify_daily_sales_by_order') }}
     UNION ALL
     SELECT date, day, week, month, quarter, year, 
-        null as order_id, null as customer_order_index, 0 as gross_revenue, 0 as total_revenue, 0 as subtotal_discount, 0 as shipping_price, 0 as total_tax, 0 as shipping_discount, subtotal_refund, shipping_refund, tax_refund 
+        order_id, customer_order_index, 0 as gross_revenue, 0 as total_revenue, 0 as subtotal_discount, 0 as shipping_price, 0 as total_tax, 0 as shipping_discount, subtotal_refund, shipping_refund, tax_refund 
     FROM {{ source('reporting','shopify_daily_refunds') }}),
     
     initial_sho_data AS (
