@@ -11,7 +11,7 @@ WITH refund_order_data AS
     FROM {{ source('reporting','shopify_daily_sales_by_order') }}
     UNION ALL
     SELECT date, day, week, month, quarter, year, 
-        order_id, customer_order_index, 0 as gross_revenue, 0 as total_revenue, 0 as subtotal_discount, 0 as shipping_price, 0 as total_tax, 0 as shipping_discount, subtotal_refund, shipping_refund, tax_refund 
+        null as order_id, customer_order_index, 0 as gross_revenue, 0 as total_revenue, 0 as subtotal_discount, 0 as shipping_price, 0 as total_tax, 0 as shipping_discount, subtotal_refund, shipping_refund, tax_refund 
     FROM {{ source('reporting','shopify_daily_refunds') }}),
     
     initial_sho_data AS (
@@ -104,12 +104,12 @@ sho_data as
             0 as impressions,
             0 as paid_purchases,
             0 as paid_revenue, 
-            SUM(COALESCE(shopify_first_orders,0)) as shopify_first_orders, 
-            SUM(COALESCE(shopify_orders,0)) as shopify_orders, 
-            SUM(COALESCE(shopify_first_sales,0)) as shopify_first_sales, 
-            SUM(COALESCE(shopify_sales,0)) as shopify_sales,
-            SUM(COALESCE(shopify_first_sales,0)-COALESCE(shopify_first_refund,0)) as shopify_first_net_sales,
-            SUM(COALESCE(shopify_sales,0)-COALESCE(shopify_refund,0)) as shopify_net_sales,
+            COALESCE(shopify_first_orders,0) as shopify_first_orders, 
+            COALESCE(shopify_orders,0) as shopify_orders, 
+            COALESCE(shopify_first_sales,0) as shopify_first_sales, 
+            COALESCE(shopify_sales,0) as shopify_sales,
+            COALESCE(shopify_first_sales,0)-COALESCE(shopify_first_refund,0) as shopify_first_net_sales,
+            COALESCE(shopify_sales,0)-COALESCE(shopify_refund,0) as shopify_net_sales,
             0 as sessions,
             0 as engaged_sessions,
             0 as ga4_purchases,
