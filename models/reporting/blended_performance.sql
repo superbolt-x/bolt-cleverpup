@@ -8,7 +8,7 @@
 WITH sho_orders AS (
     SELECT order_id FROM shopify_base.shopify_orders 
     WHERE source_name NOT IN ('Chewy','faire')
-    )
+    ),
     
     refund_order_data AS
     (SELECT date, day, week, month, quarter, year, 
