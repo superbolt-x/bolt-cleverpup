@@ -5,14 +5,21 @@
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
 
 
-WITH refund_order_data AS
+WITH sho_orders AS (
+    SELECT order_id FROM shopify_base.shopify_orders 
+    WHERE source_name NOT IN ('Chewy','faire')
+    )
+    
+    refund_order_data AS
     (SELECT date, day, week, month, quarter, year, 
         order_id, customer_order_index, gross_revenue, total_revenue, subtotal_discount, shipping_price, total_tax, shipping_discount, 0 as subtotal_refund, 0 as shipping_refund, 0 as tax_refund
     FROM {{ source('reporting','shopify_daily_sales_by_order') }}
+    WHERE order_id IN (SELECT * FROM sho_orders)
     UNION ALL
     SELECT date, day, week, month, quarter, year, 
         null as order_id, customer_order_index, 0 as gross_revenue, 0 as total_revenue, 0 as subtotal_discount, 0 as shipping_price, 0 as total_tax, 0 as shipping_discount, subtotal_refund, shipping_refund, tax_refund 
-    FROM {{ source('reporting','shopify_daily_refunds') }}),
+    FROM {{ source('reporting','shopify_daily_refunds') }}
+    WHERE order_id IN (SELECT * FROM sho_orders)),
     
     initial_sho_data AS (
         {% for granularity in date_granularity_list %}
