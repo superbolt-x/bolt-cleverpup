@@ -8,7 +8,7 @@ WITH initial_sho_data AS (
         date,
         first_orders as shopify_first_orders, 
         orders as shopify_orders, 
-         as shopify_first_sales, 
+        first_order_total_net_sales as shopify_first_sales, 
         total_net_sales as shopify_sales,
         first_order_net_sales as shopify_first_net_sales,
         net_sales as shopify_net_sales
