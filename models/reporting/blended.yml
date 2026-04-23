@@ -36,4 +36,4 @@ sources:
       identifier: cleverpup_shopify_sales
 
     - name: ga4_campaign_performance_session
-      identifier: ga4_performance_by_campaign_session
+      identifier: cleverpup_ga4_performance_by_campaign_session
