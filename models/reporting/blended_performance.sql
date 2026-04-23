@@ -6,8 +6,8 @@ WITH sho_data AS (
     SELECT 
         'Shopify' as channel,
         '(not set)' as campaign_name,
-        date_granularity,
         date,
+        date_granularity,
         0 as spend,
         0 as clicks,
         0 as impressions,
