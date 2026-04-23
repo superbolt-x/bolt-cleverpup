@@ -2,16 +2,27 @@
     alias = target.database + '_blended_performance'
 )}}
 
-WITH initial_sho_data AS (
+WITH sho_data AS (
     SELECT 
+        'Shopify' as channel,
+        '(not set)' as campaign_name,
         date_granularity,
         date,
+        0 as spend,
+        0 as clicks,
+        0 as impressions,
+        0 as paid_purchases,
+        0 as paid_revenue, 
         first_orders as shopify_first_orders, 
         orders as shopify_orders, 
         first_order_total_net_sales as shopify_first_sales, 
         total_net_sales as shopify_sales,
         first_order_net_sales as shopify_first_net_sales,
-        net_sales as shopify_net_sales
+        net_sales as shopify_net_sales,
+        0 as sessions,
+        0 as engaged_sessions,
+        0 as ga4_purchases,
+        0 as ga4_revenue 
     FROM {{ source('reporting','shopify_sales') }}
 ),
     
@@ -75,31 +86,7 @@ paid_ga4_data as (
     SUM(COALESCE(ga4_purchases, 0)) AS ga4_purchases,
     SUM(COALESCE(ga4_revenue, 0)) AS ga4_revenue
   FROM paid_data FULL OUTER JOIN ga4_data USING(date,date_granularity,campaign_id)
-  GROUP BY 1,2,3,4),
-
-sho_data as
-    (SELECT
-            'Shopify' as channel,
-            '(not set)' as campaign_name,
-            date,
-            date_granularity,
-            0 as spend,
-            0 as clicks,
-            0 as impressions,
-            0 as paid_purchases,
-            0 as paid_revenue, 
-            COALESCE(shopify_first_orders,0) as shopify_first_orders, 
-            COALESCE(shopify_orders,0) as shopify_orders, 
-            COALESCE(shopify_first_sales,0) as shopify_first_sales, 
-            COALESCE(shopify_sales,0) as shopify_sales,
-            COALESCE(shopify_first_sales,0)-COALESCE(shopify_first_refund,0) as shopify_first_net_sales,
-            COALESCE(shopify_sales,0)-COALESCE(shopify_refund,0) as shopify_net_sales,
-            0 as sessions,
-            0 as engaged_sessions,
-            0 as ga4_purchases,
-            0 as ga4_revenue 
-        FROM initial_sho_data 
-    )
+  GROUP BY 1,2,3,4)
     
 SELECT 
     channel,
